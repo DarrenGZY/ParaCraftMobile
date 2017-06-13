@@ -352,7 +352,6 @@ bool ParaEngine::CParaEngineAppBase::LoadNPLPackage(const char* sFilePath_, std:
 	if (sFilePath[sFilePath.size() - 1] == '/')
 	{
 		std::string sDirName = sFilePath.substr(0, sFilePath.size() - 1);
-		
 		if (!CParaFile::GetDevDirectory().empty())
 		{
 			std::string sFullDir = CParaFile::GetAbsolutePath(sDirName, CParaFile::GetDevDirectory());

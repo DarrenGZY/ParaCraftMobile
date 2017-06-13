@@ -728,6 +728,14 @@ bool ParaEngine::CFileUtils::FileExistRaw(const char* filename)
 #ifdef USE_COCOS_FILE_API
 	std::string sFile(filename);
 	FileLock_type lock_(s_cocos_file_io_mutex);
+	// Cocos API FileUtils::getInstance()->isDirectoryExist(sFile) could not detect directory correctly
+	// For ParacraftBuildinMod, add filename to it for detection
+	// TODO: 
+	if (sFile == "npl_packages/ParacraftBuildinMod")
+	{
+		OUTPUT_LOG("add file\n");
+		sFile += "/package.npl";
+	}
 	return !sFile.empty() && (cocos2d::FileUtils::getInstance()->isFileExist(sFile) || cocos2d::FileUtils::getInstance()->isDirectoryExist(sFile));
 #elif defined USE_BOOST_FILE_API
 	return fs::exists(filename);
@@ -925,11 +933,7 @@ std::string ParaEngine::CFileUtils::GetInitialDirectory()
 {
 #ifdef USE_COCOS_FILE_API
 	FileLock_type lock_(s_cocos_file_io_mutex);
-	std::string sRootDir = cocos2d::FileUtils::getInstance()->getSearchPaths()[0];
-	if(sRootDir.size()>0 && (sRootDir[sRootDir.size()-1] != '/' && sRootDir[sRootDir.size()-1] != '\\'))
-	{
-		sRootDir += "/";
-	}
+	std::string sRootDir = "/";
 	return sRootDir;
 #elif defined(USE_BOOST_FILE_API)
 	fs::path sWorkingDir = fs::initial_path();

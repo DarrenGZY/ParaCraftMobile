@@ -63,27 +63,20 @@ void ParaEngine::AppDelegate::CreateParaEngineApp()
 	std::string sCmdLine;
 
 	// read config file
-	std::string dir = CParaFile::GetCurDirectory(0);
-	OUTPUT_LOG("world url: %s\n", m_worldUrl.c_str());
-	OUTPUT_LOG("current directory: %s\n", dir.c_str());
 	CParaFile configFile;
 	if (configFile.OpenFile("config.txt", true, NULL, false, FILE_ON_DISK))
 	{
 		configFile.GetNextAttribute("cmdline", sCmdLine);
 		configFile.close();
 	}
-	OUTPUT_LOG("sCmdLine: %s\n", sCmdLine.c_str());
 	if (!sCmdLine.empty())
 	{
 		// concat the world url if there is any
-		OUTPUT_LOG("enter: \n");
 		if (!m_worldUrl.empty())
 		{
-			OUTPUT_LOG("enter2: \n");
 			//try {
 			//	std::regex re("paracraft://cmd/loadworld (.*)");
 			//	std::smatch match;
-			//	OUTPUT_LOG("world url:%s\n", m_worldUrl.c_str());
 			//	if (std::regex_search(m_worldUrl, match, re) && match.size() > 1)
 			//	{
 			//		OUTPUT_LOG("matched");
@@ -91,14 +84,12 @@ void ParaEngine::AppDelegate::CreateParaEngineApp()
 			//		sCmdLine += " world=\"" + url + "\"";
 			//		OUTPUT_LOG(sCmdLine.c_str());
 			//	}
-			//	OUTPUT_LOG("enter3: \n");
 			//}
 			//catch (std::regex_error& e) {
-			//	OUTPUT_LOG("enter4: \n");
 			//}
+			// Regex match does not work here, use simple substring instead
 			std::string url = m_worldUrl.substr(26);
 			sCmdLine += " world=\"" + url + "\"";
-			OUTPUT_LOG(sCmdLine.c_str());
 		}
 	}
 	else
