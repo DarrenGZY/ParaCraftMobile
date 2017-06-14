@@ -224,6 +224,7 @@ void AppDelegate::InitSearchPath()
 	cocos2d::FileUtils::getInstance()->addSearchPath(GetScriptSearchPath().c_str());
 #ifdef ANDROID
 	// on android: the preferred writable path is sdcard 
+	//OUTPUT_LOG("set writable path");
 	const std::string writable_path = "/mnt/sdcard/paracraft/";
 	ParaEngine::CParaFile::SetWritablePath(writable_path);
 #endif

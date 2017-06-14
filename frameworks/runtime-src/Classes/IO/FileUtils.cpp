@@ -933,7 +933,8 @@ std::string ParaEngine::CFileUtils::GetInitialDirectory()
 {
 #ifdef USE_COCOS_FILE_API
 	FileLock_type lock_(s_cocos_file_io_mutex);
-	std::string sRootDir = "/";
+	// Provide empty initial directory here
+	std::string sRootDir = "";
 	return sRootDir;
 #elif defined(USE_BOOST_FILE_API)
 	fs::path sWorkingDir = fs::initial_path();
@@ -1051,7 +1052,7 @@ void ParaEngine::CFileUtils::FindDiskFiles(CSearchResult& result, const std::str
 {
 #if defined(USE_COCOS_FILE_API) || defined(USE_BOOST_FILE_API)
 	std::string path = GetWritableFullPathForFilename(sRootPath);
-	
+	OUTPUT_LOG("path is %s\n", path.c_str());
 	fs::path rootPath(path);
 	if ( !fs::exists( rootPath) || !fs::is_directory(rootPath) ) {
 		OUTPUT_LOG("directory does not exist %s \n", rootPath.string().c_str());
